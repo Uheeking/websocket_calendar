@@ -1,16 +1,16 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/ZgFPYYuxXoy
- */
+"use client";
 import { SelectValue, SelectTrigger, SelectLabel, SelectItem, SelectGroup, SelectContent, Select } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-// import "./placeholder.png";
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
 
 export default function Component() {
+  const [value, onChange] = useState(new Date());
   return (
     <div key="1" className="min-h-screen flex flex-col bg-gradient-to-r from-purple-200 to-blue-200">
       <main className="flex-1 p-4 flex justify-center">
-        <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden h-full min-w-[960px] max-w-[1200px]">
+        <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden h-fullz min-w-[960px] max-w-[1200px]">
           <div className="flex justify-between p-3 border-b">
             <h2 className="text-lg font-medium">Chat</h2>
             <svg
@@ -46,48 +46,6 @@ export default function Component() {
               />
               <p className="bg-gray-300 rounded-md py-2 px-3 text-sm">Hello! Let's start the test.</p>
             </div>
-            <div className="flex items-center space-x-3 p-2">
-              <img
-                alt="Chat Bot"
-                className="rounded-full"
-                height="32"
-                src="./placeholder.png"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width="32"
-              />
-              <p className="bg-gray-300 rounded-md py-2 px-3 text-sm">Example chat 1.</p>
-            </div>
-            <div className="flex items-center space-x-3 p-2">
-              <img
-                alt="Chat Bot"
-                className="rounded-full"
-                height="32"
-                src="./placeholder.png"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width="32"
-              />
-              <p className="bg-gray-300 rounded-md py-2 px-3 text-sm">Example chat 2.</p>
-            </div>
-            <div className="flex items-center space-x-3 p-2">
-              <img
-                alt="Chat Bot"
-                className="rounded-full"
-                height="32"
-                src="./placeholder.png"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width="32"
-              />
-              <p className="bg-gray-300 rounded-md py-2 px-3 text-sm">Example chat 3.</p>
-            </div>
             <div className="flex items-center justify-end space-x-3 p-2">
               <p className="bg-blue-300 rounded-md py-2 px-3 text-sm">Example chat from me 1.</p>
               <img
@@ -102,24 +60,12 @@ export default function Component() {
                 width="32"
               />
             </div>
-            <div className="flex items-center justify-end space-x-3 p-2">
-              <p className="bg-blue-300 rounded-md py-2 px-3 text-sm">Example chat from me 2.</p>
-              <img
-                alt="Me"
-                className="rounded-full"
-                height="32"
-                src="./placeholder.png"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width="32"
-              />
-            </div>
           </div>
           <div className="border-t p-3">
-            <form className="flex items-center">
-              <Select className="flex-1">
+            <form className="flex">
+              <div className="flex-1">
+            <Input placeholder="Type your answer..." /><br />
+              <Select>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your answer" />
                 </SelectTrigger>
@@ -134,9 +80,12 @@ export default function Component() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Button className="ml-2 bg-gray-700 text-white text-sm" type="submit">
+              </div>
+              <div className="">
+              <Button className="ml-2 h-full bg-gray-700 text-white text-sm" type="submit">
                 Send
               </Button>
+              </div>
             </form>
           </div>
         </div>
