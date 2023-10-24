@@ -6,12 +6,28 @@ import React, { useState } from 'react';
 import moment from "moment";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+const dotStyle = {
+  height: "8px",
+  width: "8px",
+  backgroundColor: "#f87171",
+  borderRadius: "50%",
+  display: "flex",
+  marginLeft: "1px",
+};
 
 export default function Component() {
   const [date, setDate] = useState(new Date());
-  
+  const markedDates = ["2023-10-10", "2023-10-21", "2023-10-27","2023-10-27"];
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'row', // Add flex-direction: column
+  };
   return (
-    <div key="1" className="min-h-screen flex flex-col bg-gradient-to-r from-purple-200 to-blue-200">
+    <div
+      key="1"  style={containerStyle}
+      className="min-h-screen flex flex-col bg-gradient-to-r from-purple-200 to-blue-200"
+    >
+      <div></div>
       <main className="flex-1 p-4 flex justify-center">
         <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden h-fullz min-w-[960px] max-w-[1200px]">
           <div className="flex justify-between p-3 border-b">
@@ -47,10 +63,14 @@ export default function Component() {
                 }}
                 width="32"
               />
-              <p className="bg-gray-300 rounded-md py-2 px-3 text-sm">Hello! Let's start the test.</p>
+              <p className="bg-gray-300 rounded-md py-2 px-3 text-sm">
+                Hello! Let's start the test.
+              </p>
             </div>
             <div className="flex items-center justify-end space-x-3 p-2">
-              <p className="bg-blue-300 rounded-md py-2 px-3 text-sm">Example chat from me 1.</p>
+              <p className="bg-blue-300 rounded-md py-2 px-3 text-sm">
+                Example chat from me 1.
+              </p>
               <img
                 alt="Me"
                 className="rounded-full"
@@ -67,38 +87,54 @@ export default function Component() {
           <div className="border-t p-3">
             <form className="flex">
               <div className="flex-1">
-            <Input placeholder="Type your answer..." /><br />
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your answer" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Options</SelectLabel>
-                    <SelectItem value="option1">Option 1</SelectItem>
-                    <SelectItem value="option2">Option 2</SelectItem>
-                    <SelectItem value="option3">Option 3</SelectItem>
-                    <SelectItem value="option4">Option 4</SelectItem>
-                    <SelectItem value="option5">Option 5</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+                <Input placeholder="Type your answer..." />
+                <br />
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your answer" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Options</SelectLabel>
+                      <SelectItem value="option1">Option 1</SelectItem>
+                      <SelectItem value="option2">Option 2</SelectItem>
+                      <SelectItem value="option3">Option 3</SelectItem>
+                      <SelectItem value="option4">Option 4</SelectItem>
+                      <SelectItem value="option5">Option 5</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="">
-              <Button className="ml-2 h-full bg-gray-700 text-white text-sm" type="submit">
-                Send
-              </Button>
+                <Button
+                  className="ml-2 h-full bg-gray-700 text-white text-sm"
+                  type="submit"
+                >
+                  Send
+                </Button>
               </div>
             </form>
           </div>
         </div>
       </main>
-      <div>
-      <Calendar onChange={setDate} value={date} />
-      <div className="text-gray-500 mt-4">
-           {moment(date).format("YYYY년 MM월 DD일")} 
-         </div>
+        <div className="calendar-container">
+          <Calendar
+            onChange={setDate}
+            value={date}
+            formatDay={(locale, date) => moment(date).format('DD')}
+            tileContent={({ date }) => {
+              if (markedDates.includes(moment(date).format('YYYY-MM-DD'))) {
+                return (
+                  <div className="dotStyle" style={dotStyle}></div>
+                );
+              }
+            }}
+          />
+        
+        <div className="date-label">
+          {moment(date).format('YYYY년 MM월 DD일')}
+        </div>
+        </div>
     </div>
-    </div>
-  )
+  );
 }
