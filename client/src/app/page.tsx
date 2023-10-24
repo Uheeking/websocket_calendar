@@ -3,10 +3,13 @@ import { SelectValue, SelectTrigger, SelectLabel, SelectItem, SelectGroup, Selec
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import React, { useState } from 'react';
+import moment from "moment";
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 export default function Component() {
-  const [value, onChange] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  
   return (
     <div key="1" className="min-h-screen flex flex-col bg-gradient-to-r from-purple-200 to-blue-200">
       <main className="flex-1 p-4 flex justify-center">
@@ -90,6 +93,12 @@ export default function Component() {
           </div>
         </div>
       </main>
+      <div>
+      <Calendar onChange={setDate} value={date} />
+      <div className="text-gray-500 mt-4">
+           {moment(date).format("YYYY년 MM월 DD일")} 
+         </div>
+    </div>
     </div>
   )
 }
