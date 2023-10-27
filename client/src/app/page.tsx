@@ -2,8 +2,9 @@
 import { SelectValue, SelectTrigger, SelectLabel, SelectItem, SelectGroup, SelectContent, Select } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from "moment";
+import TodoList from './todo';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 const dotStyle = {
@@ -17,19 +18,24 @@ const dotStyle = {
 
 export default function Component() {
   const [date, setDate] = useState(new Date());
+  const [todos, setTodos] = useState([]);
   const markedDates = ["2023-10-10", "2023-10-21", "2023-10-27","2023-10-27"];
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row', // Add flex-direction: column
   };
+
+  
+  
   return (
     <div
-      key="1"  style={containerStyle}
+      key="1"
+      style={containerStyle}
       className="min-h-screen flex flex-col bg-gradient-to-r from-purple-200 to-blue-200"
     >
       <div></div>
       <main className="flex-1 p-4 flex justify-center">
-        <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden h-fullz min-w-[960px] max-w-[1200px]">
+        <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden w-full sm:w-4/5 md:w-3/4 lg:w-full xl:w-full">
           <div className="flex justify-between p-3 border-b">
             <h2 className="text-lg font-medium">Chat</h2>
             <svg
@@ -117,24 +123,26 @@ export default function Component() {
           </div>
         </div>
       </main>
-        <div className="calendar-container">
-          <Calendar
-            onChange={setDate}
-            value={date}
-            formatDay={(locale, date) => moment(date).format('DD')}
-            tileContent={({ date }) => {
-              if (markedDates.includes(moment(date).format('YYYY-MM-DD'))) {
-                return (
-                  <div className="dotStyle" style={dotStyle}></div>
-                );
-              }
-            }}
-          />
-        
+      <div className="calendar-container">
+        <Calendar
+          onChange={setDate}
+          value={date}
+          formatDay={(locale, date) => moment(date).format("DD")}
+          tileContent={({ date }) => {
+            if (markedDates.includes(moment(date).format("YYYY-MM-DD"))) {
+              return <div className="dotStyle" style={dotStyle}></div>;
+            }
+          }}
+        />
+
         <div className="date-label">
-          {moment(date).format('YYYY년 MM월 DD일')}
+          {moment(date).format("YYYY년 MM월 DD일")}
         </div>
+        <div className="App">
+          <h1>My To-Do App</h1>
+          <TodoList />
         </div>
+      </div>
     </div>
   );
 }
