@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function TodoList() {
+function TodoList(props:any) {
   const [inputText, setInputText] = useState("");
   const [todos, setTodos] = useState([]);
-  console.log(todos);
-  
 
   const handleAddTodo = async () => {
     if (inputText) {
       try {
         const response = await axios.post("http://localhost:5001/api/todos", {
+          day: props.value,
           todo: inputText,
           completed: false
         });
 
         if (response.status === 200) {
           setTodos([...todos, inputText]);
-          setInputText(""); 
+          location.reload();
         }
       } catch (error) {
         console.error("Error adding a To-Do item:", error);
@@ -41,6 +40,7 @@ function TodoList() {
   return (
     <div>
       <div>
+        <form>
         <input
           type="text"
           value={inputText}
@@ -48,12 +48,13 @@ function TodoList() {
           placeholder="Enter a new To-Do"
         />
         <button onClick={handleAddTodo}>Add</button>
+        </form>
       </div>
       <ul>
       {todos.map((todo, index) => (
           <li key={todo._id}>
-            <p>ID: {todo._id}</p>
             <p>Text: {todo.todo}</p>
+            <p>Day: {todo.day}</p>
             <p>Completed: {todo.completed ? 'Yes' : 'No'}</p>
           </li>
         ))}

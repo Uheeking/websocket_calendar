@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import React, { useEffect, useState } from 'react';
 import moment from "moment";
+import axios from 'axios'
 import TodoList from './todo';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -13,18 +14,28 @@ const dotStyle = {
   backgroundColor: "#f87171",
   borderRadius: "50%",
   display: "flex",
-  marginLeft: "1px",
+  margin: "0 auto"
 };
 
 export default function Component() {
   const [date, setDate] = useState(new Date());
-  const [todos, setTodos] = useState([]);
-  const markedDates = ["2023-10-10", "2023-10-21", "2023-10-27","2023-10-27"];
+  const [day, setDay] = useState([]);
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row', // Add flex-direction: column
   };
 
+  useEffect(() => {
+    axios.get("http://localhost:5001/api/todos")
+    .then((response) => {
+      const data = response.data;
+      const days = data.map((item) => item.day); // Create a new array with 'day' values
+      setDay(days); // Set the 'day' state with the new array
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+  }, [])
   
   
   return (
@@ -129,7 +140,7 @@ export default function Component() {
           value={date}
           formatDay={(locale, date) => moment(date).format("DD")}
           tileContent={({ date }) => {
-            if (markedDates.includes(moment(date).format("YYYY-MM-DD"))) {
+            if (day.includes(moment(date).format("YYYY-MM-DD"))) {
               return <div className="dotStyle" style={dotStyle}></div>;
             }
           }}
@@ -138,9 +149,10 @@ export default function Component() {
         <div className="date-label">
           {moment(date).format("YYYY년 MM월 DD일")}
         </div>
+        <p>show me :: {day}</p>
         <div className="App">
           <h1>My To-Do App</h1>
-          <TodoList />
+          <TodoList value={moment(date).format("YYYY-MM-DD")}/>
         </div>
       </div>
     </div>
