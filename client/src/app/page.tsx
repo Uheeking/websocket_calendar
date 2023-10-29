@@ -1,43 +1,53 @@
 "use client";
-import { SelectValue, SelectTrigger, SelectLabel, SelectItem, SelectGroup, SelectContent, Select } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import React, { useEffect, useState } from 'react';
+import {
+  SelectValue,
+  SelectTrigger,
+  SelectLabel,
+  SelectItem,
+  SelectGroup,
+  SelectContent,
+  Select,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
-import axios from 'axios'
-import TodoList from './todo';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import axios from "axios";
+import TodoList from "./todo";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 const dotStyle = {
   height: "8px",
   width: "8px",
   backgroundColor: "#f87171",
   borderRadius: "50%",
   display: "flex",
-  margin: "0 auto"
+  margin: "0 auto",
 };
 
 export default function Component() {
   const [date, setDate] = useState(new Date());
   const [day, setDay] = useState([]);
+ 
   const containerStyle = {
-    display: 'flex',
-    flexDirection: 'row', // Add flex-direction: column
+    display: "flex",
+    flexDirection: "row", // Add flex-direction: column
   };
+  
 
   useEffect(() => {
-    axios.get("http://localhost:5001/api/todos")
-    .then((response) => {
-      const data = response.data;
-      const days = data.map((item) => item.day); // Create a new array with 'day' values
-      setDay(days); // Set the 'day' state with the new array
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-  }, [])
-  
-  
+    axios
+      .get("http://localhost:5001/api/todos")
+      .then((response) => {
+        const data = response.data;
+        const days = data.map((item) => item.day); // Create a new array with 'day' values
+        setDay(days); // Set the 'day' state with the new array
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   return (
     <div
       key="1"
@@ -135,6 +145,7 @@ export default function Component() {
         </div>
       </main>
       <div className="calendar-container">
+        <h1>내 일정</h1>
         <Calendar
           onChange={setDate}
           value={date}
@@ -149,11 +160,12 @@ export default function Component() {
         <div className="date-label">
           {moment(date).format("YYYY년 MM월 DD일")}
         </div>
-        <p>show me :: {day}</p>
         <div className="App">
           <h1>My To-Do App</h1>
-          <TodoList value={moment(date).format("YYYY-MM-DD")}/>
+          
+          
         </div>
+        <TodoList value={moment(date).format("YYYY-MM-DD")} />
       </div>
     </div>
   );

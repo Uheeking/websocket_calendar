@@ -1,0 +1,16 @@
+.hoverStyle {
+    cursor: pointer;
+}
+
+.borderLine {
+    border: 1px solid #000;
+    padding: 10px 20px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between
+}
+.twoDivStyle{
+    display: flex;
+    padding-top: 25px;
+    font-size: 25px;
+}

@@ -24,12 +24,6 @@ router.get("/todos", async (req, res) => {
   }
 });
 
-// Update a to-do item
-router.put("/todos/:id", async (req, res) => {
-  await TodoItem.updateOne({ _id: req.params.id }, req.body);
-  res.json({ message: "To-do item updated." });
-});
-
 // Delete a to-do item
 router.delete("/todos/:id", async (req, res) => {
   await TodoItem.deleteOne({ _id: req.params.id });
