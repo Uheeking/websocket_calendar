@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import "./page.css"
 import axios from "axios";
 import TodoList from "./todo";
 import Calendar from "react-calendar";
@@ -24,6 +25,7 @@ const dotStyle = {
   display: "flex",
   margin: "0 auto",
 };
+
 
 export default function Component() {
   const [date, setDate] = useState(new Date());
@@ -123,11 +125,11 @@ export default function Component() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Options</SelectLabel>
-                      <SelectItem value="option1">Option 1</SelectItem>
-                      <SelectItem value="option2">Option 2</SelectItem>
-                      <SelectItem value="option3">Option 3</SelectItem>
-                      <SelectItem value="option4">Option 4</SelectItem>
-                      <SelectItem value="option5">Option 5</SelectItem>
+                      <SelectItem value="option1">뭐해?</SelectItem>
+                      <SelectItem value="option2">놀자!</SelectItem>
+                      <SelectItem value="option3">만나자!</SelectItem>
+                      <SelectItem value="option4">내일 뭐해?</SelectItem>
+                      <SelectItem value="option5">잘 자~</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -145,7 +147,7 @@ export default function Component() {
         </div>
       </main>
       <div className="calendar-container">
-        <h1>내 일정</h1>
+        <h2 className="text-lg font-medium m-3">Calendar</h2>
         <Calendar
           onChange={setDate}
           value={date}
@@ -156,14 +158,13 @@ export default function Component() {
             }
           }}
         />
-
-        <div className="date-label">
-          {moment(date).format("YYYY년 MM월 DD일")}
-        </div>
-        <div className="App">
-          <h1>My To-Do App</h1>
-          
-          
+        <div className="divStyle">
+          <div className="date-label text-lg font-medium m-2">
+            {moment(date).format("YYYY년 MM월 DD일")}
+          </div>
+          <div className="App">
+            <h1>My To-Do App</h1>
+          </div>
         </div>
         <TodoList value={moment(date).format("YYYY-MM-DD")} />
       </div>

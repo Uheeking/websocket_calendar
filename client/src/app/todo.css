@@ -12,6 +12,16 @@
 
 .twoDivStyle{
     display: flex;
-    padding-top: 10px;
+    padding-top: 25px;
     font-size: 25px;
+}
+
+.divStyle{
+    text-align: center;
+  }
+
+.addStyle{
+    color: white;
+    border-radius: 3px;
+    padding: 0px 10px;
 }

@@ -70,15 +70,16 @@ function TodoList(props : any) {
 
   return (
     <div>
-      <div>
+      <div className="divStyle">
         <form>
           <input
+          className="mr-1"
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Enter a new To-Do"
           />
-          <button onClick={handleAddTodo}>Add</button>
+          <button className="bg-gradient-to-r from-purple-200 to-blue-200 addStyle" onClick={handleAddTodo}>Add</button>
         </form>
       </div>
       <ul>
