@@ -1,3 +1,4 @@
+const User = require("../Models/user");
 const userController = {};
 
 userController.saveUser = async (userName, sid) => {
@@ -13,8 +14,13 @@ userController.saveUser = async (userName, sid) => {
   user.token = sid;
   user.online = true;
 
-  await user.save()
-  return user
+  await user.save();
+  return user;
+};
+userController.checkUser = async (sid) => {
+  const user = await User.findOne({ token: sid });
+  if (!user) throw new Error("user not found");
+  return user;
 };
 
 module.exports = userController;

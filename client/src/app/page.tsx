@@ -1,60 +1,56 @@
 "use client";
-import {
-  SelectValue,
-  SelectTrigger,
-  SelectLabel,
-  SelectItem,
-  SelectGroup,
-  SelectContent,
-  Select,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import "./page.css"
+import "./page.css";
+import socket from "./server";
 import axios from "axios";
 import TodoList from "./todo";
+import InputField from "./inputField";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-const dotStyle = {
-  height: "8px",
-  width: "8px",
-  backgroundColor: "#f87171",
-  borderRadius: "50%",
-  display: "flex",
-  margin: "0 auto",
-};
-
 
 export default function Component() {
   const [date, setDate] = useState(new Date());
+  const [message, setMessage] = useState("");
   const [day, setDay] = useState([]);
- 
-  const containerStyle = {
-    display: "flex",
-    flexDirection: "row", // Add flex-direction: column
-  };
-  
+  const [user, setUser] = useState();
+  const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:5001/api/todos")
       .then((response) => {
         const data = response.data;
-        const days = data.map((item) => item.day); // Create a new array with 'day' values
+        const days = data.map((item: any) => item.day); // Create a new array with 'day' values
         setDay(days); // Set the 'day' state with the new array
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+    socket.on("message", (message) => {
+      setMessageList((prevState)=>prevState.concat(message))
+    });
+    const userName = prompt("당신의 이름을 입력하세요.");
+    console.log("user", userName);
+
+    socket.emit("login", userName, (res: any) => {
+      console.log("res", res);
+      if (res?.ok) {
+        setUser(res.data);
+      }
+    });
   }, []);
 
+  const sendMessage = (event : any) => {
+    event.preventDefault();
+    socket.emit("sendMessage", message, (res:any) => {
+      console.log("send mess", res);
+    });
+  };
   return (
     <div
       key="1"
-      style={containerStyle}
-      className="min-h-screen flex flex-col bg-gradient-to-r from-purple-200 to-blue-200"
+      className="containerStyle min-h-screen flex flex-col bg-gradient-to-r from-purple-200 to-blue-200"
     >
       <div></div>
       <main className="flex-1 p-4 flex justify-center">
@@ -113,37 +109,53 @@ export default function Component() {
               />
             </div>
           </div>
-          <div className="border-t p-3">
-            <form className="flex">
-              <div className="flex-1">
-                <Input placeholder="Type your answer..." />
-                <br />
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your answer" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Options</SelectLabel>
-                      <SelectItem value="option1">뭐해?</SelectItem>
-                      <SelectItem value="option2">놀자!</SelectItem>
-                      <SelectItem value="option3">만나자!</SelectItem>
-                      <SelectItem value="option4">내일 뭐해?</SelectItem>
-                      <SelectItem value="option5">잘 자~</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="">
-                <Button
-                  className="ml-2 h-full bg-gray-700 text-white text-sm"
-                  type="submit"
-                >
-                  Send
-                </Button>
-              </div>
-            </form>
-          </div>
+          <InputField
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+          />
+          {/* <div className="border-t p-3">
+              <div className="plus-button">+</div>
+              <form className="flex input-container">
+                <div className="flex-1">
+                  <Input
+                    placeholder="Type your answer..."
+                    value={message}
+                    onChange={(event) => setMessage(event.target.value)}
+                    multiline={false}
+                    rows={1}
+                    message={message}
+                    setMessage={setMessage}
+                    sendMessage={sendMessage}
+                  />
+                  <br />
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your answer" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Options</SelectLabel>
+                        <SelectItem value="option1">뭐해?</SelectItem>
+                        <SelectItem value="option2">놀자!</SelectItem>
+                        <SelectItem value="option3">만나자!</SelectItem>
+                        <SelectItem value="option4">내일 뭐해?</SelectItem>
+                        <SelectItem value="option5">잘 자~</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="">
+                  <Button
+                    className="send-button ml-2 h-full bg-gray-700 text-white text-sm"
+                    type="submit"
+                    disabled={message === ""}
+                  >
+                    Send
+                  </Button>
+                </div>
+              </form>
+            </div> */}
         </div>
       </main>
       <div className="calendar-container">
@@ -154,7 +166,7 @@ export default function Component() {
           formatDay={(locale, date) => moment(date).format("DD")}
           tileContent={({ date }) => {
             if (day.includes(moment(date).format("YYYY-MM-DD"))) {
-              return <div className="dotStyle" style={dotStyle}></div>;
+              return <div className="dotStyle"></div>;
             }
           }}
         />

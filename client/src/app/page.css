@@ -1,11 +1,26 @@
 .dot {
-    height: 8px;
-    width: 8px;
-    background-color: #f87171;
-    border-radius: 50%;
-    display: flex;
-    margin-left: 1px;
-  }
-  .divStyle{
-    text-align: center;
-  }
+  height: 8px;
+  width: 8px;
+  background-color: #f87171;
+  border-radius: 50%;
+  display: flex;
+  margin-left: 1px;
+}
+
+.divStyle {
+  text-align: center;
+}
+
+.dotStyle {
+  height: 8px;
+  width: 8px;
+  background-color: #f87171;
+  border-radius: 50%;
+  display: flex;
+  margin: 0 auto;
+}
+
+.containerStyle  {
+  display: flex;
+  flex-direction: row;
+};
