@@ -35,7 +35,7 @@ export default function Page() {
     socket.emit("login", userName, (res: any) => {
       console.log("res", res);
       if (res?.ok) {
-        setUser(res.data);
+        setUser(res.data.name);
       }
     });
   }, []);

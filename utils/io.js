@@ -9,6 +9,11 @@ module.exports = function (io) {
       try {
         console.log("backend", userName);
         const user = await userController.saveUser(userName, socket.id);
+        const welcomeMessage = {
+          chat : `${user.name} is joined to this room`,
+          user : {id : null, name: userName}
+        }
+        io.emit("message",welcomeMessage)
         cb({ ok: true, data: user });
       } catch (error) {
         cb({ ok: false, error: error.message });

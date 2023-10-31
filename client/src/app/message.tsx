@@ -37,16 +37,17 @@ const MessageContainer = ({ messageList, user }) => {
         </div>
         <div className="p-3 h-3/4 overflow-y-scroll">
           {messageList.map((message, index) => (
+            
             <div
               key={index}
               className={`flex items-center space-x-3 p-2 ${
-                message.user.name === user.name ? "justify-end" : ""
+                message.user.name === user ? "justify-end" : ""
               }`}
             >
-                {message.user.name === "system" ? (<>
+                {message.user.name === user ? (<>
               <p
                 className={`rounded-md py-2 px-3 text-sm ${
-                  message.user.name === user.name
+                  message.user.name === user
                     ? "bg-blue-300"
                     : "bg-gray-300"
                 }`}
@@ -77,7 +78,7 @@ const MessageContainer = ({ messageList, user }) => {
                 />
                 <p
                   className={`rounded-md py-2 px-3 text-sm ${
-                    message.user.name === user.name
+                    message.user.name === user
                       ? "bg-blue-300"
                       : "bg-gray-300"
                   }`}
