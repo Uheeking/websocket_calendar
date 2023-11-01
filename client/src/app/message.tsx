@@ -5,13 +5,16 @@ import socket from "./server";
 const MessageContainer = ({ messageList, user }) => {
   const [message, setMessage] = useState("");
 
-  const sendMessage = (event) => {
+  const sendMessage = (event, value) => {
     event.preventDefault();
+    console.log('selectitem',value);
+    
     socket.emit("sendMessage", message, (res) => {
-      console.log("send mess", res);
+      console.log("send message", res);
     });
+    setMessage("")
   };
-
+  
   return (
     <main className="flex-1 p-4 flex justify-center">
       <div className="mx-auto bg-white rounded-xl shadow-md overflow-hidden w-full sm:w-4/5 md:w-3/4 lg:w-full xl:w-full">

@@ -20,8 +20,8 @@ export default function Page() {
       .get("http://localhost:5001/api/todos")
       .then((response) => {
         const data = response.data;
-        const days = data.map((item: any) => item.day); // Create a new array with 'day' values
-        setDay(days); // Set the 'day' state with the new array
+        const days = data.map((item: any) => item.day); 
+        setDay(days); 
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
