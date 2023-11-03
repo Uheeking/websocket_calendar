@@ -96,7 +96,7 @@ function TodoList(props : any) {
                 Completed: {todo.completed ? "Yes" : "No"}
               </p>
             </div>
-            <div className="twoDivStyle">
+            <div className="twoDivStyle hoverStyle">
               <BsCheckLg
                 onClick={() => toggleCheckbox(todo._id)}
                 className="hoverStyle"
