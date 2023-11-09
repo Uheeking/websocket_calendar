@@ -21,7 +21,7 @@ confirm창을 띄워서 이름을 입력하면 대화창에 사용자가 입장�
 
 ### 2) 채팅 나누기
 
-<div align="center">
+<div align="center" style="display:flex">
 <img width="504" alt="스크린샷 2023-11-02 163553" src="https://github.com/Uheeking/Uheeking/assets/90121929/2665b8d9-a1ad-4152-b3f1-8a9562febe56">
 <img width="503" alt="스크린샷 2023-11-02 163602" src="https://github.com/Uheeking/Uheeking/assets/90121929/ec985532-4026-4eef-9a68-04909e52b3d1">
 </div>
